@@ -89,7 +89,7 @@ ways.
 - **`FsmAuto`** — an ordered routine: timed drive cases, an intake case,
   an instant score case.
 - **`DriveCase`** and **`IntakeCase`** — writing your own cases by
-  subclassing `Case`, using the machine clock (`nowNanos()`).
+  subclassing `Case`, timing with FTCUtils' `Clock.Helper` (see `TimingExample`).
 
 ### `org.firstinspires.ftc.teamcode.mixed` — all three together
 
