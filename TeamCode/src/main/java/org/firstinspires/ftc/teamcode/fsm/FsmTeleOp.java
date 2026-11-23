@@ -5,6 +5,7 @@ import com.rmsftc.fsm.Case;
 import com.rmsftc.fsm.State;
 import com.rmsftc.ftc.ArchitectureManager;
 import com.rmsftc.ftc.ArchitecturalOpMode;
+import com.rmsftc.utils.Clock;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
@@ -140,7 +141,8 @@ public class FsmTeleOp extends ArchitecturalOpMode {
     /** Opens the claw for half a second, then returns to IDLE. */
     private static class ScoreCase extends Case {
         private final Robot robot;
-        private long startNanos;
+        private final Clock.Helper timer = new Clock.Helper(Clock.SYSTEM);
+        private double elapsedSeconds;
 
         ScoreCase(Robot robot) {
             super(State.of(TeleState.SCORE));
@@ -149,13 +151,16 @@ public class FsmTeleOp extends ArchitecturalOpMode {
 
         @Override
         public void onStart() {
-            startNanos = nowNanos();
+            elapsedSeconds = 0;
+            timer.update();
             robot.openClaw();
         }
 
         @Override
         public void onExecute() {
-            if (nowNanos() - startNanos >= 500_000_000L) {
+            timer.update();
+            elapsedSeconds += timer.dtSeconds();
+            if (elapsedSeconds >= 0.5) {
                 transition(State.of(TeleState.IDLE));
             }
         }

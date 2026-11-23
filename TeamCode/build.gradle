@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 //
 // build.gradle in TeamCode
@@ -18,6 +19,9 @@ apply from: '../build.dependencies.gradle'
 
 android {
     namespace = 'org.firstinspires.ftc.teamcode'
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
     packagingOptions {
         jniLibs.useLegacyPackaging true
@@ -38,4 +42,8 @@ dependencies {
     // for FTC, plus the FTC integration module (ArchitecturalOpMode).
     // The ftc artifact brings in behaviorTrees, cmdlib, fsm, and FTCUtils.
     implementation 'com.github.shlok-k720.BehaviorArchitectures:ftc:v0.2.2'
+
+    // Pedro Pathing: FTCUtils' geometry classes (Pose, Vector, DriveVector)
+    // extend Pedro types, so projects using them need Pedro on the classpath.
+    implementation 'com.pedropathing:core:3.0.2'
 }

@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.trees;
 
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.rmsftc.bttree.BehaviorNode;
 import com.rmsftc.bttree.NodeStatus;
+import com.rmsftc.utils.Clock;
 import com.rmsftc.utils.blackboard.Blackboard;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
@@ -20,7 +20,9 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
  *   <li>{@code onEnd()} — runs once when the node finishes or is aborted.</li>
  * </ul>
  * The {@code blackboard} passed to the constructor is the tree's shared
- * blackboard, so nodes can read/write values other nodes set.
+ * blackboard, so nodes can read/write values other nodes set. Timing uses
+ * FTCUtils' {@link Clock.Helper} delta-time pattern: {@code update()} once
+ * per tick, accumulate {@code dtSeconds()}.
  */
 public class DriveForTimeNode extends BehaviorNode {
 
@@ -30,7 +32,8 @@ public class DriveForTimeNode extends BehaviorNode {
     private final double turn;
     private final double seconds;
 
-    private final ElapsedTime timer = new ElapsedTime();
+    private final Clock.Helper timer = new Clock.Helper(Clock.SYSTEM);
+    private double elapsedSeconds;
 
     public DriveForTimeNode(String name, Blackboard blackboard, Robot robot,
                             double forward, double strafe, double turn, double seconds) {
@@ -44,12 +47,15 @@ public class DriveForTimeNode extends BehaviorNode {
 
     @Override
     protected void onStart() {
-        timer.reset();
+        elapsedSeconds = 0;
+        timer.update();
     }
 
     @Override
     protected NodeStatus onTick() {
-        if (timer.seconds() >= seconds) {
+        timer.update();
+        elapsedSeconds += timer.dtSeconds();
+        if (elapsedSeconds >= seconds) {
             return NodeStatus.SUCCESS;
         }
         robot.drive(forward, strafe, turn);

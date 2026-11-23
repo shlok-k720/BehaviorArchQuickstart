@@ -100,6 +100,65 @@ ways.
   whatever wraps them, so drive each mechanism from exactly one place at
   a time.
 
+### `org.firstinspires.ftc.teamcode.ftcutils` — FTCUtils features
+
+BehaviorArchitectures builds on [FTCUtils](https://github.com/shlok-k720/FTCUtils),
+and the `ftc` artifact brings it in — so every FTCUtils feature is
+available in your OpModes too. This package tours all of it:
+
+- **`FtcUtilsTour`** — one runnable OpMode printing the results of the
+  pure-JVM examples below.
+- **`RobotConfig`** — the config system: `Var`/`Val` tunables in a
+  `Configuration` (the pattern `PidConfig`/`LimiterConfig` use).
+- **`TimingExample`** — `Clock` and the `Clock.Helper` delta-time
+  pattern used across this quickstart, plus unit-tagged
+  `NumericalValue` conversions (degrees↔radians, inches↔meters, …).
+- **`MathExample`** — `MathUtils` (clamp, deadband, angle wrapping,
+  rate limiting), `Statistics`, and `Matrix` algebra.
+- **`ControlExample`** — PIDF via `PidConfig`, plain `Controller.pid`,
+  gain-scheduled `PiecewiseController`, and slew-rate `Limiter`s.
+- **`FilterExample`** — low-pass / moving-average filters via
+  `FilterState`, a constant-velocity `KalmanFilter`, and an
+  `ExtendedKalmanFilter` with a nonlinear measurement.
+- **`GeometryExample`** — the mutable Pedro geometry family (`Pose`,
+  `Vector`, `Vector2D`, `DriveVector`) and the shared enums
+  (`AllianceColor`, …). Needs Pedro on the classpath (declared in
+  `TeamCode/build.gradle`).
+- **`BlackboardLoggerExample`** — typed `Blackboard` values with change
+  callbacks, and the `Logger`/`LogSystem` pipeline (with `Html`
+  formatting helpers).
+- **`LoggingExample`** — the full logging tour: the core log bus
+  (`Logger`/`LogSystem`, library `Captions`, the manager's
+  `telemetryLogger` sink), the telemetry-module loggers (`SystemLogger`,
+  `StringLogger`, `MultipleLogger`, `Strings`), and HTML logging
+  (`Html`, `HtmlLogger`, `TelemetryLogger` with `logHTML`/`logBold`).
+- **`DaemonTeleOp`** — daemons: your own `@FTCDaemon` method, the
+  built-in `ClockManager` dt daemon, and `ArchitectureDaemon` ticking
+  an `ArchitectureManager` from the daemon loop.
+- **`SmartDriveTeleOp`** — `SmartMotor` (rate-limited motors) and
+  `MecanumDrive` with robot- and field-centric driving.
+- **`MenuAuto`** — pre-match `Prompter`/`GamepadMenu` selection
+  (alliance, start position) persisted with `Storage`.
+
+### `org.firstinspires.ftc.teamcode.kotlin` — the same examples in Kotlin
+
+Kotlin is set up in the Gradle files (Kotlin 2.3.20, `jvmTarget 1.8`),
+and this package mirrors the Java examples using the Kotlin DSLs:
+
+- **`kotlin.trees.TreeTeleOpKt`** — `manager.tree { ... }` with lambda
+  `action`/`condition` nodes.
+- **`kotlin.commands.CommandAutoKt`** — the `manager.commands { ... }`
+  DSL (`runOnce`, `waitMs`, `race`, Java commands via `command(...)`).
+- **`kotlin.fsm.FsmAutoKt`** — the `manager.stateMachine { ... }` DSL
+  (`case { onStart / onExecute / transitionToNext() }`).
+- **`kotlin.mixed.MixedAutoKt`** — `ArchitectureConverter` composition,
+  Kotlin syntax.
+- **`kotlin.ftcutils.FtcUtilsKt`** — FTCUtils from Kotlin (`Clock`,
+  units, `MathUtils`, `Statistics`, the shared Java config class).
+
+Java and Kotlin examples share the same `Robot` class and can be mixed
+freely — write each OpMode in whichever language you prefer.
+
 ## Using BehaviorArchitectures in your own project
 
 Add the JitPack repository and the `ftc` artifact (it brings in the
