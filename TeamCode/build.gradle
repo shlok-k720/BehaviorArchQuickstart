@@ -24,6 +24,16 @@ android {
     }
 }
 
+repositories {
+    // BehaviorArchitectures (and its FTCUtils dependency) are published on JitPack.
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
     implementation project(':FtcRobotController')
+
+    // BehaviorArchitectures: behavior trees, commands, and state machines
+    // for FTC, plus the FTC integration module (ArchitecturalOpMode).
+    // The ftc artifact brings in behaviorTrees, cmdlib, fsm, and FTCUtils.
+    implementation 'com.github.shlok-k720.BehaviorArchitectures:ftc:v0.2.2'
 }
