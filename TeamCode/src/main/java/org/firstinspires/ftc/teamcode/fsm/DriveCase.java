@@ -2,12 +2,14 @@ package org.firstinspires.ftc.teamcode.fsm;
 
 import com.rmsftc.fsm.Case;
 import com.rmsftc.fsm.State;
+import com.rmsftc.utils.Clock;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
 /**
  * A custom state-machine case: drive in a direction for a fixed time, then
- * advance to the next case. See {@link IntakeCase} for the Case lifecycle.
+ * advance to the next case. See {@link IntakeCase} for the Case lifecycle
+ * and the {@link Clock.Helper} delta-time pattern used for timing.
  */
 public class DriveCase extends Case {
 
@@ -15,8 +17,9 @@ public class DriveCase extends Case {
     private final double forward;
     private final double strafe;
     private final double turn;
-    private final long durationNanos;
-    private long startNanos;
+    private final double seconds;
+    private final Clock.Helper timer = new Clock.Helper(Clock.SYSTEM);
+    private double elapsedSeconds;
 
     public DriveCase(State state, Robot robot,
                      double forward, double strafe, double turn, double seconds) {
@@ -25,17 +28,20 @@ public class DriveCase extends Case {
         this.forward = forward;
         this.strafe = strafe;
         this.turn = turn;
-        this.durationNanos = (long) (seconds * 1_000_000_000L);
+        this.seconds = seconds;
     }
 
     @Override
     public void onStart() {
-        startNanos = nowNanos();
+        elapsedSeconds = 0;
+        timer.update();
     }
 
     @Override
     public void onExecute() {
-        if (nowNanos() - startNanos >= durationNanos) {
+        timer.update();
+        elapsedSeconds += timer.dtSeconds();
+        if (elapsedSeconds >= seconds) {
             transitionToNext();
             return;
         }
