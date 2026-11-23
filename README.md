@@ -27,6 +27,7 @@ the official FIRST Tech Challenge SDK quickstart for the BIOBUZZ
    ```groovy
    repositories {
        maven { url 'https://jitpack.io' }
+       maven { url 'https://repo.dairy.foundation/releases' } // Sloth, via FTCUtils
    }
 
    dependencies {
@@ -109,6 +110,7 @@ Add the JitPack repository and the `ftc` artifact (it brings in the
 // build.gradle (TeamCode)
 repositories {
     maven { url 'https://jitpack.io' }
+    maven { url 'https://repo.dairy.foundation/releases' } // Sloth, via FTCUtils
 }
 
 dependencies {
@@ -120,6 +122,7 @@ dependencies {
 // build.gradle.kts (TeamCode)
 repositories {
     maven { url = uri("https://jitpack.io") }
+    maven { url = uri("https://repo.dairy.foundation/releases") } // Sloth, via FTCUtils
 }
 
 dependencies {

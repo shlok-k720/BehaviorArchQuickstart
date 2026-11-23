@@ -27,6 +27,8 @@ android {
 repositories {
     // BehaviorArchitectures (and its FTCUtils dependency) are published on JitPack.
     maven { url 'https://jitpack.io' }
+    // Sloth (pulled in transitively by FTCUtils) is published here.
+    maven { url 'https://repo.dairy.foundation/releases' }
 }
 
 dependencies {
